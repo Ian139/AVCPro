@@ -1,6 +1,8 @@
 .DS_Store
 /.build
 /build
+!/build/
+!/build/README.md
 /Packages
 xcuserdata/
 DerivedData/
