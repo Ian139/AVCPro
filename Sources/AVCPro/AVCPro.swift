@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 
 @main
 struct AVCProApp: App {
@@ -12,6 +13,15 @@ struct AVCProApp: App {
                 .environmentObject(playerService)
         }
         .commands {
+            CommandGroup(after: .appInfo) {
+                Button("About AVCPro") {
+                    let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0.0"
+                    NSApplication.shared.orderFrontStandardAboutPanel(options: [
+                        .applicationName: "AVCPro",
+                        .version: version
+                    ])
+                }
+            }
             CommandMenu("Playback") {
                 Button("Play/Pause") {
                     playerService.togglePlayPause()

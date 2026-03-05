@@ -16,6 +16,8 @@ struct ExportView: View {
     @State private var searchText = ""
     @State private var sortOption: ClipSortOption = .dateDesc
     @State private var layoutMode: ClipLayoutMode = .grid
+    @State private var dateFilter: DateFilter = .all
+    @State private var durationFilter: DurationFilter = .all
 
     var body: some View {
         VStack(spacing: 0) {
@@ -48,6 +50,18 @@ struct ExportView: View {
                     .frame(maxWidth: 260)
                 Picker("Sort", selection: $sortOption) {
                     ForEach(ClipSortOption.allCases) { option in
+                        Text(option.title).tag(option)
+                    }
+                }
+                .pickerStyle(.menu)
+                Picker("Date", selection: $dateFilter) {
+                    ForEach(DateFilter.allCases) { option in
+                        Text(option.title).tag(option)
+                    }
+                }
+                .pickerStyle(.menu)
+                Picker("Duration", selection: $durationFilter) {
+                    ForEach(DurationFilter.allCases) { option in
                         Text(option.title).tag(option)
                     }
                 }
@@ -220,6 +234,8 @@ struct ExportView: View {
         if !searchText.isEmpty {
             clips = clips.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
         }
+        clips = clips.filter { dateFilter.includes($0.date) }
+        clips = clips.filter { durationFilter.includes($0.duration) }
         return sortOption.sort(clips)
     }
 

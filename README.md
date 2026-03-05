@@ -1,5 +1,7 @@
 # AVCPro
 
+![AVCPro icon](Assets/icon.jpg)
+
 AVCPro makes it easy to browse and export AVCHD clips on macOS.
 
 ## Get Started
